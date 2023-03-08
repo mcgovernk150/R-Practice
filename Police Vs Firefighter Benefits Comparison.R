@@ -1,6 +1,6 @@
-#Use this template to begin milestone 3  
-#Use the code provided to read the files into RStudio and then add your code below each of the comment prompts that follow
+#Compare Dataset Values
 #Read in Files
+
 library(readr)
 
 firefighter <- read_csv("~/workspace/SNHU/DAT-500/Milestones/dat500_milestone_three_data_firefighter.csv")
@@ -9,10 +9,53 @@ View(firefighter)
 police <- read_csv("~/workspace/SNHU/DAT-500/Milestones/dat500_milestone_three_data_police.csv")
 View(police)
 
-#To begin milestone 3, you will continue from your milestone 2.  Below is a sample of what your 
-# milestone 2 variables would have looked like.
-#To begin milestone 3, adjust the sample field names and variable names below to be the same fields used in Milestone 2
+#Perform Min/Max/Average Analysis for Firefighter Total Salary (TS) and store in variable
+min(Firefighter[,6])
+firefighterTSMin<-min(firefighter[,6]) 
+firefighterTSAvg<-colMeans(firefighter[,6])
+firefighterTSMax<-max(firefighter[,6])
 
+#Perform Min/Max/Average Analysis for Firefighter Retirement (R) and store in variable
+firefighterRMin<-min(firefighter[,7]) 
+firefighterRAvg<-colMeans(firefighter[,7])
+firefighterRMax<-max(firefighter[,7])
+
+#Perform Min/Max/Average Analysis for Police Total Salary (TS) and store in variable
+policeTSMin<-min(police[,6])
+policeTSAvg<-colMeans(police[,6])
+policeTSMax<-max(police[,6])
+
+#Perform Min/Max/Average Analysis for Police Retrement (R) and store in variable
+policeRMin<-min(police[,7])
+policeRAvg<-colMeans(police[,7])
+policeRMax<-max(police[,7])
+
+#Compare Dataset Values 
+firefighterTSMin
+policeTSMin
+
+firefighterTSAvg
+policeTSAvg
+
+firefighterTSMax
+policeTSMax
+
+firefighterTSAvg-policeTSAvg
+
+
+firefighterRMin
+policeRMin
+
+firefighterRAvg
+policeRAvg
+
+firefighterRAvg-policeRAvg
+
+
+firefighterRMax
+policeRMax
+
+#
 policeTSMin<-min(police$`Total Salary`)
 policeTSMax<-max(police$`Total Salary`)
 policeTSAvg<-mean(police$`Total Salary`)
@@ -29,27 +72,26 @@ firefighterRMin<-min(firefighter$Retirement)
 firefighterRMax<-max(firefighter$Retirement)
 firefighterRAvg<-mean(firefighter$Retirement)
 
-#Milestone 3 data structures
-#add your code below each of the prompts below
-#Create your matrix
+
+#Create matrix
 FirefighterM<-rbind(firefighterTSMin,firefighterTSMax,firefighterTSAvg,firefighterRMin,firefighterRMax,firefighterRAvg)
 colnames(FirefighterM)<-c("firefighter")
 rownames(FirefighterM)<-c("TSMin","TSMax","TSAvg","RMin","RMax","RAvg")
 FirefighterM
 
 
-#Create your vector
+#Create vector
 
 PoliceV<-c(policeTSMin,policeTSMax,policeTSAvg,policeRMin,policeRMax,policeRAvg)
 PoliceV
 
-#Create your combined matrix
+#Create combined matrix
 
 CompensationM<-cbind(FirefighterM,PoliceV)
 colnames(CompensationM)<-c("firefighter","police")
 CompensationM
 
-#Create your dataframe
+#Create dataframe
 
 df<-data.frame(CompensationM,FirefighterM-PoliceV)
 colnames(df)<-c("firefighter","police","firefighter vs police")
