@@ -1,1 +1,30 @@
+library(readr)
+iihs_data <- read_csv(“~/iihs_data.csv")
+View(iihs_data)
 
+
+#Principal Components Analysis
+
+model <- princomp(~.,iihs_data[1:75,3:8], na.action=na.omit)
+summary(model)
+screeplot(model)
+
+#Linear Regression
+#add a 'Buy' column that reflects a buy signal (true = 1 or false = 0) based on the average of all category losses
+
+iihs_data_tr <- transform(iihs_data,Buy = as.numeric(iihs_data$Average.Loss < 100))
+View(iihs_data_tr)
+
+#Use the lm function for linear regression model
+
+lm_model=lm(iihs_data_tr$Buy ~ iihs_data_tr$Collision. + iihs_data_tr$Property.damage. + iihs_data_tr$Comprehensive. + iihs_data_tr$Personal.injury.
+            + iihs_data_tr$Medical.payment. + iihs_data_tr$Bodily.injury.)
+summary(lm_model)
+
+
+#Logistic Regression
+lg_model=glm(iihs_data_tr$Buy ~ iihs_data_tr$Collision. + iihs_data_tr$Property.damage. + iihs_data_tr$Comprehensive. + 
+               iihs_data_tr$Personal.injury. + iihs_data_tr$Medical.payment. + iihs_data_tr$Bodily.injury.,family = "quasibinomial",na.action=na.omit,control = 
+               list(maxit = 50))
+
+summary(lg_model)
